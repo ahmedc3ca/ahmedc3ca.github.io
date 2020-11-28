@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>We live in a society.js app</title>
+		<title>My first three.js app</title>
 		<style>
 			body { margin: 0; }
 		</style>
@@ -22,7 +22,7 @@
 
 				camera.updateProjectMatrix();
 			})
-			const geometry = new THREE.BoxGeometry();
+			const geometry = new THREE.SphereGeometry();
 			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 			const cube = new THREE.Mesh( geometry, material );
 			scene.add( cube );
