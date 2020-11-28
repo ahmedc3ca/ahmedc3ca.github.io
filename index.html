@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>My first three.js app</title>
+		<title>We live in a society.js app</title>
 		<style>
 			body { margin: 0; }
 		</style>
@@ -16,7 +16,7 @@
 			renderer.setClearColor("#e5e5e5");
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
-			window.addEventListene('resize',()=>{
+			window.addEventListener('resize',()=>{
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				camera.aspect = window.innerWidth/window.innerHeight;
 
