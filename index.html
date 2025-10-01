@@ -1,44 +1,70 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>We live in a society.js app</title>
-		<style>
-			body { margin: 0; }
-		</style>
-	</head>
-	<body>
-		<script src="js/three.js"></script>
-		<script>
-			const scene = new THREE.Scene();
-			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game Picker</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .user-list { margin-bottom: 20px; }
+    .results { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Select Players</h2>
+  <div class="user-list">
+    <label><input type="checkbox" value="Ahmed"> Ahmed</label><br>
+    <label><input type="checkbox" value="Omar"> Omar</label><br>
+    <label><input type="checkbox" value="Youssef"> Youssef</label><br>
+    <label><input type="checkbox" value="Yahia"> Yahia</label><br>
+  </div>
 
-			const renderer = new THREE.WebGLRenderer();
-			renderer.setClearColor("#e5e5e5");
-			renderer.setSize( window.innerWidth, window.innerHeight );
-			document.body.appendChild( renderer.domElement );
-			window.addEventListener('resize',()=>{
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				camera.aspect = window.innerWidth/window.innerHeight;
+  <button onclick="findGames()">Find Common Games</button>
 
-				camera.updateProjectMatrix();
-			})
-			const geometry = new THREE.SphereGeometry();
-			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-			const cube = new THREE.Mesh( geometry, material );
-			scene.add( cube );
+  <div class="Proposed Games" id="results"></div>
 
-			camera.position.z = 5;
+  <script>
+    // Games and who plays them
+    const games = {
+      "Headliners": ["Ahmed", "Youssef", "Omar", "Yahia"],
+	  "R.E.P.O": ["Ahmed", "Youssef", "Omar", "Yahia"],
+	  "Peak": ["Ahmed", "Youssef", "Omar", "Yahia"],
+	  "Murky Divers": ["Ahmed", "Youssef", "Omar", "Yahia"],
+      "Golf with Friends": ["Ahmed", "Youssef", "Omar", "Yahia"],
+      "League of Legends": ["Ahmed", "Youssef"],
+      "2xKo": ["Ahmed", "Youssef", "Omar"],
+	  "VRising": ["Ahmed", "Youssef", "Omar"],
+	  "Kingdom 2 Crowns": ["Ahmed", "Omar"],
+	  "Police Simulator": ["Ahmed", "Youssef"]
+    };
 
-			const animate = function () {
-				requestAnimationFrame( animate );
+    function findGames() {
+      const checked = Array.from(document.querySelectorAll('input[type=checkbox]:checked')).map(cb => cb.value);
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "";
 
-				cube.rotation.x += 0.01;
-				cube.rotation.y += 0.01;
+      if (checked.length === 0) {
+        resultsDiv.textContent = "Please select at least one player.";
+        return;
+      }
 
-				renderer.render( scene, camera );
-			};
+      // Find games that ALL selected players play
+      let commonGames = Object.keys(games).filter(game => checked.every(player => games[game].includes(player)));
 
-			animate();
-		</script>
-	</body>
+      // Shuffle results (random order)
+      commonGames = commonGames.sort(() => Math.random() - 0.5);
+
+      if (commonGames.length === 0) {
+        resultsDiv.textContent = "No common games found.";
+      } else {
+        const ul = document.createElement("ul");
+        commonGames.forEach(game => {
+          const li = document.createElement("li");
+          li.textContent = game;
+          ul.appendChild(li);
+        });
+        resultsDiv.appendChild(ul);
+      }
+    }
+  </script>
+</body>
 </html>
