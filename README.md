@@ -1,1 +1,1 @@
-Make game win prize :)
+Game picker: AI Powered ofc :)
